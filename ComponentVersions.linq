@@ -5,8 +5,7 @@
 void Main()
 {
 	var depDir = @"C:\Users\mnenn\projects\zodiac-r2\src\Dependencies";
-	var folderNames = Directory.EnumerateDirectories(depDir)
-		.Select(d => d.Substring(d.LastIndexOf('\\') + 1))
+	var folderNames = Directory.EnumerateDirectories(depDir, "*", SearchOption.AllDirectories)
 		.Dump();
 	
 	folderNames.Count().Dump();
@@ -20,7 +19,7 @@ void Main()
 				&& d.Name != "log4net.dll"
 				&& d.Version != null
 				&& d.Name != "mscorelib.dll")
-		//.Select(d => d.Substring(0, d.IndexOf(".")))
+		.OrderBy(d => d.Name)
 		.Dump("Filenames");
 }
 
@@ -34,4 +33,3 @@ class DependencyFileVersion
 		return base.Equals(obj);
 	}
 }
-
